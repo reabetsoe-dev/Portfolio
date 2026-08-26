@@ -8,8 +8,10 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  Menu,
   MessageCircle,
   Send,
+  X,
 } from "lucide-react";
 import { IconByName } from "../utils/iconMap";
 import { academicProfile } from "../data/academic";
@@ -368,6 +370,7 @@ function ContactForm() {
 }
 
 export function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-[#101010] text-white">
@@ -376,28 +379,66 @@ export function HomePage() {
 
       <header className="sticky top-0 z-50 border-b border-white/5 bg-[#151515]/95 backdrop-blur-xl">
         <nav className="section-shell flex items-center justify-between gap-4 py-4">
-          <a href="#home" className="min-w-0 truncate text-base font-black tracking-tight text-white sm:text-xl">
-            <span className={accent}>Reabetsoe</span> Sephekola
+          <a
+            href="#home"
+            className="inline-flex min-h-10 min-w-0 items-center gap-1 truncate text-base font-black tracking-tight text-white sm:text-xl"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span className={accent}>Reabetsoe</span>
+            <span>Sephekola</span>
           </a>
 
           <div className="hidden items-center gap-7 text-sm font-bold text-white/85 lg:flex">
             {navItems.map((item) => (
-              <a key={item.href} href={item.href} className="transition hover:text-[#ff0050]">
+              <a key={item.href} href={item.href} className="inline-flex min-h-10 items-center rounded-md px-2 transition hover:text-[#ff0050]">
                 {item.label}
               </a>
             ))}
           </div>
 
-          <a
-            href={`mailto:${profile.contact.email}`}
-            className={`${accentBg} hidden h-11 items-center justify-center rounded-md px-5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#ff1f66] sm:inline-flex`}
-          >
-            Hire Me
-          </a>
+          <div className="flex shrink-0 items-center gap-2">
+            <a
+              href="#contact"
+              className={`${accentBg} hidden h-11 items-center justify-center rounded-md px-5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#ff1f66] sm:inline-flex`}
+            >
+              Hire Me
+            </a>
+            <button
+              type="button"
+              className="grid h-11 w-11 place-items-center rounded-md border border-white/10 bg-white/[0.06] text-[#ff0050] transition hover:border-[#ff0050] hover:bg-[#ff0050] hover:text-white lg:hidden"
+              aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((current) => !current)}
+            >
+              {isMenuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
+            </button>
+          </div>
         </nav>
+
+        <div className={`${isMenuOpen ? "block" : "hidden"} section-shell pb-4 lg:hidden`}>
+          <div className="grid gap-1 rounded-md border border-white/10 bg-[#1b1b1b] p-2 shadow-[0_24px_70px_-46px_rgba(0,0,0,0.85)] sm:grid-cols-3">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="inline-flex min-h-11 items-center rounded-md px-3 text-sm font-bold text-white/80 transition hover:bg-white/[0.06] hover:text-[#ff0050]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              className={`${accentBg} inline-flex min-h-11 items-center justify-center rounded-md px-3 text-sm font-bold text-white transition hover:bg-[#ff1f66] sm:hidden`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Hire Me
+            </a>
+          </div>
+        </div>
       </header>
 
-      <section id="home" className="section-shell grid min-h-[calc(100vh-76px)] items-center gap-12 py-16 lg:grid-cols-[1fr_0.95fr]">
+      <section id="home" className="section-shell grid min-h-[calc(100vh-76px)] items-center gap-10 py-12 sm:gap-12 sm:py-16 lg:grid-cols-[1fr_0.95fr]">
         <div className="min-w-0">
           <p className="text-sm font-black uppercase tracking-[0.2em] text-white/80">Hello, I'm</p>
           <h1
@@ -443,7 +484,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="relative mx-auto h-[320px] w-[320px] sm:h-[460px] sm:w-[460px] lg:h-[520px] lg:w-[520px]">
+        <div className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[460px] lg:max-w-[520px]">
           <div className="absolute inset-5 rounded-full border-[7px] border-[#ff0050]" aria-hidden="true" />
           <div className="absolute inset-x-14 bottom-2 h-24 rounded-b-full bg-[#ff0050]" aria-hidden="true" />
           <img
@@ -460,7 +501,7 @@ export function HomePage() {
             <img
               src={profile.profileImage}
               alt={`${profile.name} portrait`}
-              className="h-full min-h-[420px] w-full object-cover object-center grayscale"
+              className="h-full min-h-[320px] w-full object-cover object-center grayscale sm:min-h-[420px]"
             />
             <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#111111] to-transparent" aria-hidden="true" />
           </div>
@@ -536,13 +577,13 @@ export function HomePage() {
                 {resumeProjectEntries.map((project) => (
                   <article
                     key={project.title}
-                    className="relative overflow-hidden rounded-md border border-white/5 bg-[#1b1b1b] p-7 transition duration-300 hover:-translate-y-1 hover:border-[#ff0050]/70 hover:shadow-[0_24px_70px_-46px_rgba(255,0,80,0.9)]"
+                    className="relative overflow-hidden rounded-md border border-white/5 bg-[#1b1b1b] p-5 transition duration-300 hover:-translate-y-1 hover:border-[#ff0050]/70 hover:shadow-[0_24px_70px_-46px_rgba(255,0,80,0.9)] sm:p-7"
                   >
                     <span className="absolute left-0 top-8 h-16 w-1 rounded-r-full bg-[#ff0050]" aria-hidden="true" />
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-[#ff0050]">{project.category}</p>
-                        <h4 className="mt-3 text-2xl font-black leading-tight text-white">{project.title}</h4>
+                        <h4 className="mt-3 text-xl font-black leading-tight text-white sm:text-2xl">{project.title}</h4>
                         <p className="mt-2 text-sm font-bold text-white/75">{project.role}</p>
                       </div>
                     </div>
@@ -652,7 +693,7 @@ export function HomePage() {
             {projects.map((project, index) => (
               <article
                 key={project.id}
-                className="grid gap-8 rounded-md border border-white/5 bg-[#181818] p-5 transition hover:border-[#ff0050]/70 lg:grid-cols-[0.95fr_1fr] lg:p-8"
+                className="grid gap-7 rounded-md border border-white/5 bg-[#181818] p-4 transition hover:border-[#ff0050]/70 sm:p-5 lg:grid-cols-[0.95fr_1fr] lg:gap-8 lg:p-8"
               >
                 <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                   <img
@@ -665,10 +706,10 @@ export function HomePage() {
                   <p className="text-sm font-black uppercase tracking-[0.16em] text-[#ff0050]">
                     {project.category[0]}
                   </p>
-                  <h3 className="mt-4 text-3xl font-black leading-tight text-white sm:text-4xl">
+                  <h3 className="mt-4 text-2xl font-black leading-tight text-white sm:text-4xl">
                     {project.title}
                   </h3>
-                  <p className="mt-5 text-base leading-8 text-white/70">{project.description}</p>
+                  <p className="mt-5 text-sm leading-7 text-white/70 sm:text-base sm:leading-8">{project.description}</p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {project.technologies.map((technology) => (
                       <span key={technology} className="rounded-md border border-white/10 px-3 py-1 text-xs font-bold text-white/65">
@@ -732,11 +773,11 @@ export function HomePage() {
       </section>
 
       <footer className="border-t border-white/5 bg-[#151515] py-6">
-        <div className="section-shell flex flex-col gap-3 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="section-shell flex flex-col gap-3 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
           <p>Copyright &copy; 2026 <span className={accent}>Reabetsoe Sephekola</span>. All Rights Reserved.</p>
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {navItems.map((item) => (
-              <a key={item.href} href={item.href} className="transition hover:text-[#ff0050]">
+              <a key={item.href} href={item.href} className="inline-flex min-h-10 items-center rounded-md px-2 transition hover:text-[#ff0050]">
                 {item.label}
               </a>
             ))}
