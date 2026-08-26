@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.git/
+.openai/
+.vercel/
+screenshots/
+
+.env
+.env.*
+!.env.example
+
+*.log
+*.tsbuildinfo
+
+.DS_Store
+Thumbs.db
+.vscode/
