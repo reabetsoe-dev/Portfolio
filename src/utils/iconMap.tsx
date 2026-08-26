@@ -1,0 +1,87 @@
+import {
+  ArrowRight,
+  Award,
+  BookOpen,
+  BrainCircuit,
+  BriefcaseBusiness,
+  CheckCircle2,
+  Cloud,
+  Code2,
+  Database,
+  ExternalLink,
+  FileDown,
+  Github,
+  GraduationCap,
+  Image as ImageIcon,
+  LayoutTemplate,
+  Layers,
+  LifeBuoy,
+  LineChart,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessagesSquare,
+  MonitorSmartphone,
+  Network,
+  Palette,
+  PenTool,
+  RefreshCw,
+  Router,
+  ScanSearch,
+  SearchCheck,
+  Send,
+  Settings2,
+  ShieldCheck,
+  Workflow,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
+
+const icons: Record<string, LucideIcon> = {
+  ArrowRight,
+  Award,
+  BookOpen,
+  BrainCircuit,
+  BriefcaseBusiness,
+  CheckCircle2,
+  Cloud,
+  Code2,
+  Database,
+  ExternalLink,
+  FileDown,
+  Github,
+  GraduationCap,
+  Image: ImageIcon,
+  LayoutTemplate,
+  Layers,
+  LifeBuoy,
+  LineChart,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessagesSquare,
+  MonitorSmartphone,
+  Network,
+  Palette,
+  PenTool,
+  RefreshCw,
+  Router,
+  ScanSearch,
+  SearchCheck,
+  Send,
+  Settings2,
+  ShieldCheck,
+  Workflow,
+  Wrench,
+};
+
+interface IconByNameProps {
+  name: string;
+  className?: string;
+  strokeWidth?: number;
+}
+
+export function IconByName({ name, className, strokeWidth = 1.8 }: IconByNameProps) {
+  const Icon = icons[name] ?? Code2;
+  return <Icon aria-hidden="true" className={className} strokeWidth={strokeWidth} />;
+}
